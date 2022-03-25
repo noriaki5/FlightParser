@@ -1,27 +1,30 @@
 package com.study.noriaki.FlightParser;
 
+import com.study.noriaki.FlightParser.calculators.*;
+import com.study.noriaki.FlightParser.printers.Printer;
+
 import java.io.File;
+import java.util.List;
 
 public class Main {
-    final static String defaultPath = "src/main/resources/tickets.json";
+    private static final String DEFAULT_PATH = "src/main/resources/tickets.json";
+    private static final Printer PRINTER = new Printer();
+
+    static List<Calculator<?>> calculators = List.of(
+        new AverageFlightTimeCalculator("Владивосток", "Тель-Авив"),
+        new AverageFlightTimeCalculatorWithTimezone("Владивосток", "Тель-Авив"),
+        new PercentileFlightTime("Владивосток", "Тель-Авив", 90.0),
+        new PercentileFlightTimeWithTimeZones("Владивосток", "Тель-Авив", 90.0)
+    );
 
     public static void main(String[] args) {
+        Tickets tickets = args.length > 0 ? parse(args[0]) : parse(DEFAULT_PATH);
+        calculators.forEach(calc -> PRINTER.print(calc.calculate(tickets.getTickets()).getResult()));
+    }
 
-        String filePath;
-        if (args.length > 0) {
-            filePath = args[0];
-        } else {
-            filePath = defaultPath;
-        }
+    public static Tickets parse(String filePath) {
         TicketParser ticketParser = new TicketParser();
-        Tickets tickets = ticketParser.parseJSON(new File(filePath));
-        //tickets.getTickets().forEach(System.out::println);
 
-        TicketsCalculations ticketsCalculations = new TicketsCalculations();
-        //System.out.println(ticketsCalculations.calculateAveragePrice(tickets.getTickets(), "Владивосток", "Тель-Авив"));
-        ticketsCalculations.calculateAverageFlightTime(tickets.getTickets(), "Владивосток", "Тель-Авив");
-        ticketsCalculations.calculateAverageFlightTimeWithTimeZones(tickets.getTickets(), "Владивосток", "Тель-Авив");
-        ticketsCalculations.calculatePercentileFlightTime(tickets.getTickets(), "Владивосток", "Тель-Авив", 90.0);
-        ticketsCalculations.calculatePercentileFlightTimeWithTimeZones(tickets.getTickets(), "Владивосток", "Тель-Авив", 90.0);
+        return ticketParser.parseJSON(new File(filePath));
     }
 }
