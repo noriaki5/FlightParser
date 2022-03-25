@@ -31,6 +31,8 @@ public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
         Duration duration = Duration.ofMinutes(percentile(sortedTickets, percentile));
         CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
         durationCalculatorResult.setResult(duration);
+        durationCalculatorResult.setResultInfo(String.format("%.2f percentile flight time between %s and %s with timezone changes is %d days %d hours %d minutes",
+            percentile, departure, destination, duration.toDaysPart(), duration.toHoursPart(), duration.toMinutesPart()));
 
         return durationCalculatorResult;
     }

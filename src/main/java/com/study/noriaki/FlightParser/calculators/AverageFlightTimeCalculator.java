@@ -26,6 +26,8 @@ public class AverageFlightTimeCalculator implements Calculator<Duration> {
         Duration duration = Duration.ofMinutes((long)avgMinutes);
         CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
         durationCalculatorResult.setResult(duration);
+        durationCalculatorResult.setResultInfo(String.format("Average flight time between %s and %s is %d days %d hours %d minutes",
+            departure, destination, duration.toDaysPart(), duration.toHoursPart(), duration.toMinutesPart()));
 
         return durationCalculatorResult;
     }
