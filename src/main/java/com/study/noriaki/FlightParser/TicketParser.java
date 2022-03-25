@@ -64,8 +64,14 @@ public class TicketParser {
 
     private void setZonedTime(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
-            ticket.setDepartureDateTime(ZonedDateTime.of(ticket.getDepartureDate(), ticket.getDepartureTime(), getZoneIdByAirportName(ticket.getDepartureAirportName())));
-            ticket.setArrivalDateTime(ZonedDateTime.of(ticket.getArrivalDate(), ticket.getArrivalTime(), getZoneIdByAirportName(ticket.getDestinationAirportName())));
+            ticket.setDepartureDateTime(
+                ZonedDateTime.of(ticket.getDepartureDate(),
+                    ticket.getDepartureTime(),
+                    getZoneIdByAirportName(ticket.getDepartureAirportName())));
+            ticket.setArrivalDateTime(
+                ZonedDateTime.of(ticket.getArrivalDate(),
+                    ticket.getArrivalTime(),
+                    getZoneIdByAirportName(ticket.getDestinationAirportName())));
         }
     }
 }
