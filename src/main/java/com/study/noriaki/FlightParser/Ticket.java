@@ -47,22 +47,6 @@ public class Ticket {
 
     }
 
-    public Ticket(String departureAirportId, String departureAirportName, String destinationAirportId, String destinationAirportName, LocalDate departureDate, LocalTime departureTime, LocalDate arrivalDate, LocalTime arrivalTime, ZonedDateTime departureDateTime, ZonedDateTime arrivalDateTime, String carrier, int stops, BigInteger price) {
-        this.departureAirportId = departureAirportId;
-        this.departureAirportName = departureAirportName;
-        this.destinationAirportId = destinationAirportId;
-        this.destinationAirportName = destinationAirportName;
-        this.departureDate = departureDate;
-        this.departureTime = departureTime;
-        this.arrivalDate = arrivalDate;
-        this.arrivalTime = arrivalTime;
-        this.departureDateTime = departureDateTime;
-        this.arrivalDateTime = arrivalDateTime;
-        this.carrier = carrier;
-        this.stops = stops;
-        this.price = price;
-    }
-
     public String getDepartureAirportId() {
         return departureAirportId;
     }
