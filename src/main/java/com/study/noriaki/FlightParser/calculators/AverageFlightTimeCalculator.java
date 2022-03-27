@@ -6,8 +6,8 @@ import java.time.Duration;
 import java.util.List;
 
 public class AverageFlightTimeCalculator implements Calculator<Duration> {
-    private String departure;
-    private String destination;
+    private final String departure;
+    private final String destination;
 
     public AverageFlightTimeCalculator(String departure, String destination) {
         this.departure = departure;
@@ -26,9 +26,15 @@ public class AverageFlightTimeCalculator implements Calculator<Duration> {
         Duration duration = Duration.ofMinutes((long)avgMinutes);
         CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
         durationCalculatorResult.setResult(duration);
-        durationCalculatorResult.setResultInfo(String.format("Average flight time between %s and %s is %d days %d hours %d minutes",
-            departure, destination, duration.toDaysPart(), duration.toHoursPart(), duration.toMinutesPart()));
 
         return durationCalculatorResult;
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public String getDestination() {
+        return destination;
     }
 }

@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
-    private String departure;
-    private String destination;
-    private double percentile;
+    private final String departure;
+    private final String destination;
+    private final double percentile;
 
     public PercentileFlightTimeWithTimeZones(String departure, String destination, double percentile) {
         this.departure = departure;
@@ -31,8 +31,6 @@ public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
         Duration duration = Duration.ofMinutes(percentile(sortedTickets, percentile));
         CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
         durationCalculatorResult.setResult(duration);
-        durationCalculatorResult.setResultInfo(String.format("%.2f percentile flight time between %s and %s with timezone changes is %d days %d hours %d minutes",
-            percentile, departure, destination, duration.toDaysPart(), duration.toHoursPart(), duration.toMinutesPart()));
 
         return durationCalculatorResult;
     }
@@ -45,5 +43,17 @@ public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
         } else {
             return list.get(index - 1);
         }
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public double getPercentile() {
+        return percentile;
     }
 }

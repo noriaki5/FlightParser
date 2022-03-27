@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         Tickets tickets = args.length > 0 ? parse(args[0]) : parse(DEFAULT_PATH);
-        calculators.forEach(calc -> PRINTER.print(calc.calculate(tickets.getTickets()).getResultInfo()));
+        calculators.forEach(calc -> PRINTER.print(new DurationTemplate(calc), calc.calculate(tickets.getTickets()).getResult()));
     }
 
     public static Tickets parse(String filePath) {
