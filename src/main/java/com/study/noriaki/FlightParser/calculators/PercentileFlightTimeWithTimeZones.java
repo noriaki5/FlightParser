@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
+public class PercentileFlightTimeWithTimeZones implements Calculator {
     private final String departure;
     private final String destination;
     private final double percentile;
@@ -19,7 +19,7 @@ public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
     }
 
     @Override
-    public CalculatorResult<Duration> calculate(List<Ticket> tickets) {
+    public Duration calculate(List<Ticket> tickets) {
         List<Long> sortedTickets = tickets.stream()
             .filter(x -> x.getDepartureAirportName().equals(departure))
             .filter(x -> x.getDestinationAirportName().equals(destination))
@@ -28,11 +28,8 @@ public class PercentileFlightTimeWithTimeZones implements Calculator<Duration> {
             .sorted()
             .boxed()
             .collect(Collectors.toList());
-        Duration duration = Duration.ofMinutes(percentile(sortedTickets, percentile));
-        CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
-        durationCalculatorResult.setResult(duration);
 
-        return durationCalculatorResult;
+        return Duration.ofMinutes(percentile(sortedTickets, percentile));
     }
 
     private long percentile(List<Long> list, double percentile) {

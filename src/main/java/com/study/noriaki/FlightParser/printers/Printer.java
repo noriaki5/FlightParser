@@ -5,7 +5,7 @@ import com.study.noriaki.FlightParser.DurationTemplate;
 import java.time.Duration;
 
 public class Printer {
-    public void print(DurationTemplate template, Object t) {
-        System.out.printf((template.getTemplate()) + "%n", ((Duration)t).toDaysPart(), ((Duration)t).toHoursPart(), ((Duration)t).toMinutesPart());
+    public void print(DurationTemplate template, Duration t) {
+        System.out.printf((template.getTemplate()) + "%n", t.toDaysPart(), t.toHoursPart(), t.toMinutesPart());
     }
 }

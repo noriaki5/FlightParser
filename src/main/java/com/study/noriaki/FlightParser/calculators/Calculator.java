@@ -2,9 +2,10 @@ package com.study.noriaki.FlightParser.calculators;
 
 import com.study.noriaki.FlightParser.Ticket;
 
+import java.time.Duration;
 import java.util.List;
 
-public interface Calculator<T> {
+public interface Calculator {
 
-    CalculatorResult<T> calculate(List<Ticket> tickets);
+    Duration calculate(List<Ticket> tickets);
 }

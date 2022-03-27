@@ -5,7 +5,7 @@ import com.study.noriaki.FlightParser.Ticket;
 import java.time.Duration;
 import java.util.List;
 
-public class AverageFlightTimeCalculatorWithTimezone implements Calculator<Duration> {
+public class AverageFlightTimeCalculatorWithTimezone implements Calculator {
     private final String departure;
     private final String destination;
 
@@ -14,7 +14,7 @@ public class AverageFlightTimeCalculatorWithTimezone implements Calculator<Durat
         this.destination = destination;
     }
     @Override
-    public CalculatorResult<Duration> calculate(List<Ticket> tickets) {
+    public Duration calculate(List<Ticket> tickets) {
         double avgMinutes = tickets.stream()
             .filter(x -> x.getDepartureAirportName().equals(departure))
             .filter(x -> x.getDestinationAirportName().equals(destination))
@@ -22,11 +22,8 @@ public class AverageFlightTimeCalculatorWithTimezone implements Calculator<Durat
                 x.getArrivalDateTime()).toMinutes())
             .average()
             .orElse(Double.NaN);
-        Duration duration = Duration.ofMinutes((long)avgMinutes);
-        CalculatorResult<Duration> durationCalculatorResult = new CalculatorResult<>();
-        durationCalculatorResult.setResult(duration);
 
-        return durationCalculatorResult;
+        return Duration.ofMinutes((long)avgMinutes);
     }
 
     public String getDeparture() {
