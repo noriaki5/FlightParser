@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -32,6 +34,20 @@ public class TicketParser {
         return tickets;
     }
 
+    public Tickets parseJSON(InputStream inputStream) {
+        Tickets tickets = readJSON(inputStream);
+        processTickets(tickets);
+
+        return tickets;
+    }
+
+    public Tickets parseJSON(URL url) {
+        Tickets tickets = readJSON(url);
+        processTickets(tickets);
+
+        return tickets;
+    }
+
     public ZoneId getZoneIdByAirportName(String name) {
         if (name.equals("Владивосток")) {
             return ZoneId.of("Asia/Vladivostok");
@@ -53,6 +69,22 @@ public class TicketParser {
     private Tickets readJSON(String json) {
         try {
             return mapper.readValue(json, Tickets.class);
+        } catch (Exception e) {
+            throw new JSONParseException(e.getMessage());
+        }
+    }
+
+    private Tickets readJSON(InputStream inputStream) {
+        try {
+            return mapper.readValue(inputStream, Tickets.class);
+        } catch (Exception e) {
+            throw new JSONParseException(e.getMessage());
+        }
+    }
+
+    private Tickets readJSON(URL url) {
+        try {
+            return mapper.readValue(url, Tickets.class);
         } catch (Exception e) {
             throw new JSONParseException(e.getMessage());
         }
